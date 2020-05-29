@@ -17,7 +17,7 @@ public class HelloServlet extends HttpServlet {
 		response.setStatus(200);
 		PrintWriter writer = response.getWriter();
 
-                // This is only needed because we want to print the IP
+		// This is only needed because we want to print the IP
 		String ssh_client_info = System.getenv("SSH_CONNECTION");
 		String ip_addr = System.getenv("VCAP_APP_HOST");
 		if (ssh_client_info != null && ip_addr.equals("0.0.0.0")) {
@@ -28,6 +28,11 @@ public class HelloServlet extends HttpServlet {
 		}
 
 		writer.println("Hello from " + ip_addr + ":" + System.getenv("VCAP_APP_PORT"));
+
+		System.getenv().forEach((k, v) ->
+			writer.println(k + "=" + v)
+		);
+
 		writer.close();
 	}
 }
